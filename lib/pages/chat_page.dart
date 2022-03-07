@@ -31,35 +31,33 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           title: Column(
             children: [
               CircleAvatar(
-                child: Text('Te', style: TextStyle(fontSize: 12)),
+                child: const Text('Te', style: TextStyle(fontSize: 12)),
                 backgroundColor: Colors.blue[100],
                 maxRadius: 15,
               ),
               const SizedBox(height: 3),
-              Text('Nombre de Usuario',
+              const Text('Nombre de Usuario',
                   style: TextStyle(color: Colors.black54, fontSize: 12))
             ],
           )),
-      body: Container(
-        child: Column(
-          children: [
-            Flexible(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                reverse: true, // en un chat lo mas reciente esta abajo
-                itemCount: _mensajes.length,
-                itemBuilder: (_, i) => _mensajes[i],
-              ),
+      body: Column(
+        children: [
+          Flexible(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              reverse: true, // en un chat lo mas reciente esta abajo
+              itemCount: _mensajes.length,
+              itemBuilder: (_, i) => _mensajes[i],
             ),
-            const Divider(height: 1),
-            // caja de texto donde se escribe
-            Container(
-              color: Colors.white,
-              // height: 70,
-              child: _inputChat(),
-            )
-          ],
-        ),
+          ),
+          const Divider(height: 1),
+          // caja de texto donde se escribe
+          Container(
+            color: Colors.white,
+            // height: 70,
+            child: _inputChat(),
+          )
+        ],
       ),
     );
   }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:chat/services/auth_service.dart';
 
 import 'package:chat/widgets/login_logo.dart';
 import 'package:chat/widgets/custom_input.dart';
 import 'package:chat/widgets/custom_btn.dart';
 import 'package:chat/widgets/login_pie.dart';
+
+import 'package:chat/helpers/mostrar_alerta.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -49,6 +54,8 @@ class __FormularioState extends State<_Formulario> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -72,11 +79,21 @@ class __FormularioState extends State<_Formulario> {
             isPassword: true,
           ),
           CustomBtn(
-            textoBoton: 'Acceder',
-            onPressed: () {
-              print(emailCtrl.text);
-              print(passCtrl.text);
-            },
+            textoBoton: 'Nuevo usuario',
+            onPressed: authService.autenticando
+                ? () => null
+                : () async {
+                    final mensajeRegistro = await authService.registrarNuevoUsuario(
+                        nombreCtrl.text.trim(),
+                        emailCtrl.text.trim(),
+                        passCtrl.text.trim());
+                    if (mensajeRegistro == '') {
+                      // TODO: conectar a socket server
+                      Navigator.pushReplacementNamed(context, 'usuarios');
+                    } else {
+                      mostrarAlerta(context, 'Registro incorrecto', mensajeRegistro);
+                    }
+                  },
           ),
         ],
       ),
