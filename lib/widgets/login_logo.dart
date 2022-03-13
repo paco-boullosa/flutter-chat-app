@@ -14,7 +14,7 @@ class LoginLogo extends StatelessWidget {
           children: [
             const Image(image: AssetImage('assets/img/tag-logo.png')),
             const SizedBox(height: 20),
-            Text(titulo, style: const TextStyle(fontSize: 30))
+            Text(titulo, style: const TextStyle(fontSize: 27))
           ],
         ),
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat/services/auth_service.dart';
+import 'package:chat/services/socket_service.dart';
+
 import 'package:chat/pages/usuarios_page.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -24,9 +26,11 @@ class LoadingPage extends StatelessWidget {
     // se envia el context para poder hacer la navegacion
 
     final authService = Provider.of<AuthService>(context, listen: false);
+    final socketService = Provider.of<SocketService>(context, listen: false);
+
     final autenticado = await authService.estaLogueado();
     if (autenticado) {
-      // TODO: conectar al socket server
+      socketService.conectarSocket();
       // Navigator.pushReplacementNamed(context, 'usuarios');
       // --- Mejor se pone como abajo para que no haga una transicion de pagina
       Navigator.pushReplacement(

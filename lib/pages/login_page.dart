@@ -7,6 +7,7 @@ import 'package:chat/widgets/custom_btn.dart';
 import 'package:chat/widgets/login_pie.dart';
 
 import 'package:chat/services/auth_service.dart';
+import 'package:chat/services/socket_service.dart';
 
 import 'package:chat/helpers/mostrar_alerta.dart';
 
@@ -54,6 +55,7 @@ class __FormularioState extends State<_Formulario> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -81,8 +83,7 @@ class __FormularioState extends State<_Formulario> {
                     final bool loginOK = await authService.login(
                         emailCtrl.text.trim(), passCtrl.text.trim());
                     if (loginOK) {
-                      // TODO: conectar a socket server
-                      // navegar a otra pantalla
+                      socketService.conectarSocket();
                       Navigator.pushReplacementNamed(context, 'usuarios');
                     } else {
                       mostrarAlerta(

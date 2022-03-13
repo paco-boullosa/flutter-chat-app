@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chat/services/auth_service.dart';
+import 'package:chat/services/socket_service.dart';
 
 import 'package:chat/widgets/login_logo.dart';
 import 'package:chat/widgets/custom_input.dart';
@@ -55,6 +56,7 @@ class __FormularioState extends State<_Formulario> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -88,7 +90,7 @@ class __FormularioState extends State<_Formulario> {
                         emailCtrl.text.trim(),
                         passCtrl.text.trim());
                     if (mensajeRegistro == '') {
-                      // TODO: conectar a socket server
+                      socketService.conectarSocket();
                       Navigator.pushReplacementNamed(context, 'usuarios');
                     } else {
                       mostrarAlerta(context, 'Registro incorrecto', mensajeRegistro);
